@@ -5,17 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Table;
+/*** this is the categories Entity class**/
 @Entity
-public class AssetCategories {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name="AssetCategories")
+public class AssetCategories 
+{
+	
+@Id/*** to create primary key in Database**/
+@GeneratedValue(strategy = GenerationType.IDENTITY)/** to make id filed auto generated value**/
 private int id;
 @Column
-private String name;
+private String name; /**for categories name field**/
 @Column
-private boolean active;
+private boolean active;/** for soft delete**/
 
+/** it is all about getters and setters**/
 public AssetCategories(String name, boolean active) {
  	this.name = name;
 	this.active = active;

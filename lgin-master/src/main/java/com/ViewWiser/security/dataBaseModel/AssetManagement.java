@@ -1,24 +1,25 @@
 package com.ViewWiser.security.dataBaseModel;
 
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
- 
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+ /*** this is the AssetManagement Entity class[create Asset Table in database**/
+
 @Entity
+@Table(name="Asset")
 public class AssetManagement {
-@Id
-@GeneratedValue(strategy =GenerationType.IDENTITY)
+@Id/*** to create primary key in Database**/
+@GeneratedValue(strategy =GenerationType.IDENTITY)/** make that id as auto generated vale**/
 private	int id;
+
 @Column
 private String assetTag;
-@Column
-private String model;
-@Column
-private String categories;
 @Column
 private LocalDate purchaseDate;
 @Column
@@ -29,14 +30,14 @@ private int price;
 private boolean flag;
 @Column
 private boolean active;
-
-
-public AssetManagement(String assetTag, String model, String categories, LocalDate purchaseDate,
+@OneToOne/** one to one relation with AssetModel**/
+private AssetModel AssetModelId;
+  
+/** getters and setters**/
+public AssetManagement(String assetTag,LocalDate purchaseDate,
 		String description, int price, boolean flag,boolean active) 
 { 
 	this.assetTag = assetTag;
-	this.model = model;
-	this.categories = categories;
 	this.purchaseDate = purchaseDate;
 	this.description = description;
 	this.price = price;
@@ -45,6 +46,7 @@ public AssetManagement(String assetTag, String model, String categories, LocalDa
  }
 
 public AssetManagement() {}
+ 
 public int getId() {
 	return id;
 }
@@ -65,22 +67,19 @@ public String getAssetTag() {
 }
 public void setAssetTag(String assetTag) {
 	this.assetTag = assetTag;
-}
-public String getModel() {
-	return model;
-}
-public void setModel(String model) {
-	this.model = model;
-}
-public String getCategories() {
-	return categories;
-}
-public void setCategories(String categories) {
-	this.categories = categories;
-}
+} 
 public LocalDate getPurchaseDate() {
 	return purchaseDate;
 }
+
+public AssetModel getAssetModelId() {
+	return AssetModelId;
+}
+
+public void setAssetModelId(AssetModel assetModelId) {
+	AssetModelId = assetModelId;
+}
+
 public void setPurchaseDate(LocalDate purchaseDate) {
 	this.purchaseDate = purchaseDate;
 }

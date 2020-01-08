@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.ViewWiser.security.UserRepository;
-import com.ViewWiser.security.Users;
+import com.ViewWiser.security.AssetUserRepository;
+import com.ViewWiser.security.AssetUser;
 import com.ViewWiser.security.dataBaseModel.UserDetailsCostumClass;
 import com.ViewWiser.security.dataBaseModel.UserDetailsCostumRepository;
  
@@ -20,7 +20,7 @@ import com.ViewWiser.security.dataBaseModel.UserDetailsCostumRepository;
 public class UserRegisterationService {
 
 	@Autowired
-	 public UserRepository userRepository;/** to save user authentication info to this repository**/
+	 public AssetUserRepository userRepository;/** to save user authentication info to this repository**/
 	@Autowired
 	 public UserDetailsCostumRepository userDetailsCostumClassRepository; /** to save userDetails to repository*/
  /****/
@@ -28,22 +28,37 @@ public class UserRegisterationService {
     {
  		JSONObject json=new JSONObject(data);/** the data is in string format that will converted into json format**/ 
  	    System.out.println(json.getString("email"));
-	    Users user=new Users(json.getString("email"),json.getString("password"), json.getString("role"), true);
-	    UserDetailsCostumClass userDetails= new UserDetailsCostumClass(json.getString("name"),json.getLong("phoneNumber"),json.getString("address"), "our web");
-	    userRepository.save(user);/*** save to repository**/
-	    userDetailsCostumClassRepository.save(userDetails);/*** save to repository**/
+	    AssetUser user=new AssetUser(json.getString("email"),json.getString("password"), json.getString("role"), true);
+ 	    userRepository.save(user);/*** save to repository**/
 	    
 	  return new ResponseEntity<>(HttpStatus.OK);
 	}
+   
+   public ResponseEntity<?> userregisterationDetails(String data)
+   {
+		JSONObject json=new JSONObject(data);/** the data is in string format that will converted into json format**/ 
+	    AssetUser userId=userRepository.findById(json.getInt("UserId"));
+	    
+	    if(userId==null)
+	    {
+	    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	    }else {
+		    UserDetailsCostumClass userDetails= new UserDetailsCostumClass(json.getString("name"),json.getLong("phoneNumber"),json.getString("address"), "our web");
+	    userDetails.setUserID(userId);
+	    userDetailsCostumClassRepository.save(userDetails);/*** save to repository**/
+		   return new ResponseEntity<>(HttpStatus.OK);
+	    }
+    }
+   
 
 /** to get all registered user**/
-   public List<Users> getUserRegisteredList()
+   public List<AssetUser> getUserRegisteredList()
    {
 	return   userRepository.findAll().stream().filter(i->i.getActive()==true).collect(Collectors.toList());
    }
 
 /** to get particular user information**/
-   public Users userDetails(int id) 
+   public AssetUser userDetails(int id) 
    {
  	return userRepository.findById(id);
    }

@@ -16,14 +16,14 @@ public class MyuserDetailService implements UserDetailsService
 {
 	/** to override the user details of UserDetailsService class inbuilt methods */
 	@Autowired
-	private UserRepository userRepository;
+	private AssetUserRepository userRepository;
 
 	/** geting user table from user repository table */
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Optional<Users> user = userRepository.findByUserName(username); /** finding username */
+		Optional<AssetUser> user = userRepository.findByUserName(username); /** finding username */
 
 		user.orElseThrow(() -> new UsernameNotFoundException("user name not found"));
 		/** if user name doesn't exesist than throgh error */
