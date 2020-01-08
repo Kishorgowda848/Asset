@@ -18,7 +18,7 @@ public class MyUserDetails implements UserDetails {
 	private List<GrantedAuthority> authority;
 
 	/** the User class used to get all details from user table */
-	public MyUserDetails(Users user) /* this constructor is used to overrride userDetailService */
+	public MyUserDetails(AssetUser user) /* this constructor is used to overrride userDetailService */
 	{
 		this.userName = user.getUserName();
 		this.password = user.getPass();

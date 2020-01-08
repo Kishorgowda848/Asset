@@ -13,18 +13,25 @@ import org.springframework.stereotype.Service;
  
 import com.ViewWiser.security.dataBaseModel.AssetManagement;
 import com.ViewWiser.security.dataBaseModel.AssetMangementRepository;
+import com.ViewWiser.security.dataBaseModel.AssetModel;
+import com.ViewWiser.security.dataBaseModel.AssetModelRepository;
 
 @Service
 public class AssetManagementService {
 	@Autowired
     private AssetMangementRepository assetMangementRepository;
+	@Autowired
+	private AssetModelRepository assetModelRepository;
 	
  public ResponseEntity<?> addAssetToTable(String data)
  {
 	JSONObject json=new JSONObject(data);/*** converting  string to json object**/
 	LocalDate date= LocalDate.parse(json.getString("date")); /*** parsing the data**/  
-	AssetManagement asset=new AssetManagement(json.getString("assetTag"),json.getString("model"),json.getString("categories"),date,json.getString("description"),json.getInt("price"),true,true);
-	assetMangementRepository.save(asset);/** save to asset Management Repository**/
+	AssetManagement asset=new AssetManagement(json.getString("assetTag"),date,json.getString("description"),json.getInt("price"),true,true);
+	AssetModel assetModel=assetModelRepository.findById(json.getInt("AssetModelID"));
+	asset.setAssetModelId(assetModel);
+	assetModelRepository.save(assetModel);
+ 	assetMangementRepository.save(asset);/** save to asset Management Repository**/
 	return new ResponseEntity<>(HttpStatus.OK);
 }
  

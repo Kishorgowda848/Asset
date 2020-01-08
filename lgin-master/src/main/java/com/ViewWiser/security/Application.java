@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication /** to say it is spring boot application */
-@EnableJpaRepositories(basePackageClasses = UserRepository.class) /**
+@EnableJpaRepositories(basePackageClasses = AssetUserRepository.class) /**
 																	 * To recogranise user repository to create user
 																	 * table to store login data
 																	 */

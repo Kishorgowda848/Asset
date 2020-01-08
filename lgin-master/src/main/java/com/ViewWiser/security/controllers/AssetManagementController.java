@@ -3,7 +3,6 @@ package com.ViewWiser.security.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,24 +17,22 @@ import com.ViewWiser.security.dataBaseModel.AssetManagement;
 public class AssetManagementController 
 {
 	@Autowired
-    private AssetManagementService service;
+    private AssetManagementService service;/***getting service from AssetManagementService class***/
  
-   @PostMapping("/addAsset")	
+   @PostMapping("/addAsset")/** it is for adding asset to table**/	
    public ResponseEntity<?> addAssetToTable(@RequestBody String data)
 	{
-	service.addAssetToTable(data);
-	return new ResponseEntity<>(HttpStatus.OK);
-   }
+	   return service.addAssetToTable(data);
+    }
 	
-	@GetMapping("/getassets")
+	@GetMapping("/getassets")/** it is for getting all assets**/
 	public List<AssetManagement> getAssets(){
 		return service.getAssetLists();
 	}
 	
-	@PostMapping("/deleteAsset/{id}")
+	@PostMapping("/deleteAsset/{id}")/***to delete particular asset [Soft delete]**/
 	public ResponseEntity<?> deleteAsset(@PathVariable int id){
-		service.deleteAsset(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+		return service.deleteAsset(id);
+ 	}
 	
 }

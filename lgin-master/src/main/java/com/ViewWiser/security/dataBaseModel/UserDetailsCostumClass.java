@@ -6,13 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id; 
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import com.ViewWiser.security.Users;
+import com.ViewWiser.security.AssetUser;
 
 /** UserDeatilsCostumClass table creation in database**/
 @Entity
+@Table(name="UserInfo")
 public class UserDetailsCostumClass {
-	@Id/* to generate ID in database**/
+	@Id/** to make Primary key ID in database**/
 	@GeneratedValue(strategy = GenerationType.IDENTITY)/** to make ID as Auto increment and primary key*/
     private int id;
 	@Column(name="name")
@@ -24,10 +26,10 @@ public class UserDetailsCostumClass {
 	@Column(name="source")
     private String source;
  	@OneToOne
-    private Users userID;/** Users class is getting from Security package with one to one relation**/
+    private AssetUser userID;/** AssetUser class is getting from Security package with one to one relation**/
  	
- 	
-	public int getId() /** all are getters and setters**/
+ /** all are getters and setters**/
+	public int getId() 
 	{
 		return id;
 	}
@@ -58,10 +60,10 @@ public class UserDetailsCostumClass {
 	public void setSource(String source) {
 		this.source = source;
 	}
-	public Users getUserID() {
+	public AssetUser getUserID() {
 		return userID;
 	}
-	public void setUserID(Users userID)
+	public void setUserID(AssetUser userID)
 	{
 		this.userID = userID;
 	}
